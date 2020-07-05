@@ -1,8 +1,10 @@
 package efone.max.spring5recipeapp.services;
 
+import efone.max.spring5recipeapp.converters.RecipeCommandToRecipe;
+import efone.max.spring5recipeapp.converters.RecipeToRecipeCommand;
 import efone.max.spring5recipeapp.domain.Recipe;
 import efone.max.spring5recipeapp.repositories.RecipeRepository;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -11,25 +13,32 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-class RecipeServiceImplTest {
-    @Mock
-    RecipeService recipeService;
+public class RecipeServiceImplTest {
+
+    RecipeServiceImpl recipeService;
 
     @Mock
     RecipeRepository recipeRepository;
 
-    @BeforeEach
-    void setUp() {
+    @Mock
+    RecipeToRecipeCommand recipeToRecipeCommand;
+
+    @Mock
+    RecipeCommandToRecipe recipeCommandToRecipe;
+
+    @BeforeAll
+    public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
 
-        recipeService = new RecipeServiceImpl(recipeRepository);
+        recipeService = new RecipeServiceImpl(recipeRepository, recipeCommandToRecipe, recipeToRecipeCommand);
     }
 
     @Test
@@ -47,19 +56,20 @@ class RecipeServiceImplTest {
         verify(recipeRepository, never()).findAll();
     }
 
-
     @Test
-    void getAllRecipes() {
+    public void getRecipesTest() throws Exception {
+
         Recipe recipe = new Recipe();
-        HashSet recepiesData = new HashSet();
-        recepiesData.add(recipe);
+        HashSet receipesData = new HashSet();
+        receipesData.add(recipe);
 
-        when(recipeRepository.findAll()).thenReturn(recepiesData);
+        when(recipeService.getAllRecipes()).thenReturn(receipesData);
 
-        Set<Recipe> recipeSet = recipeService.getAllRecipes();
+        Set<Recipe> recipes = recipeService.getAllRecipes();
 
-        assertEquals(recipeSet.size(), 1);
-
+        assertEquals(recipes.size(), 1);
         verify(recipeRepository, times(1)).findAll();
+        verify(recipeRepository, never()).findById(anyLong());
     }
+
 }
