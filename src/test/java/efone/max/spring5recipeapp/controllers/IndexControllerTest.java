@@ -60,7 +60,7 @@ class IndexControllerTest {
         recipe.setId(1L);
         recipes.add(recipe);
 
-        when(recipeService.getAllRecipes()).thenReturn(recipes);
+        when(recipeService.getRecipes()).thenReturn(recipes);
 
         //when
         String viewName = indexController.getIndexPage(model);
@@ -69,7 +69,7 @@ class IndexControllerTest {
 
         //then
         assertEquals("index", viewName);
-        verify(recipeService, times(1)).getAllRecipes();
+        verify(recipeService, times(1)).getRecipes();
         verify(model, times(1)).addAttribute(eq("recipes"), argumentCaptor.capture());
         Set<Recipe> setInController = argumentCaptor.getValue();
         assertEquals(2, setInController.size());
