@@ -4,7 +4,7 @@ import efone.max.spring5recipeapp.commands.IngredientCommand;
 import efone.max.spring5recipeapp.commands.UnitOfMeasureCommand;
 import efone.max.spring5recipeapp.domain.Ingredient;
 import efone.max.spring5recipeapp.domain.Recipe;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
@@ -23,7 +23,7 @@ public class IngredientCommandToIngredientTest {
 
     IngredientCommandToIngredient converter;
 
-    @BeforeAll
+    @BeforeEach
     public void setUp() throws Exception {
         converter = new IngredientCommandToIngredient(new UnitOfMeasureCommandToUnitOfMeasure());
     }

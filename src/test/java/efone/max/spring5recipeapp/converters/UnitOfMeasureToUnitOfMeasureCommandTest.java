@@ -2,7 +2,7 @@ package efone.max.spring5recipeapp.converters;
 
 import efone.max.spring5recipeapp.commands.UnitOfMeasureCommand;
 import efone.max.spring5recipeapp.domain.UnitOfMeasure;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -19,7 +19,7 @@ public class UnitOfMeasureToUnitOfMeasureCommandTest {
 
     UnitOfMeasureToUnitOfMeasureCommand converter;
 
-    @BeforeAll
+    @BeforeEach
     public void setUp() throws Exception {
         converter = new UnitOfMeasureToUnitOfMeasureCommand();
     }

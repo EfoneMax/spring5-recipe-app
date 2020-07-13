@@ -3,11 +3,12 @@ package efone.max.spring5recipeapp.controllers;
 import efone.max.spring5recipeapp.commands.RecipeCommand;
 import efone.max.spring5recipeapp.domain.Recipe;
 import efone.max.spring5recipeapp.services.RecipeService;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -23,7 +24,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
-@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@ExtendWith(MockitoExtension.class)
 public class RecipeControllerTest {
 
     @Mock
@@ -33,9 +34,8 @@ public class RecipeControllerTest {
 
     MockMvc mockMvc;
 
-    @BeforeAll
+    @BeforeEach
     public void setUp() throws Exception {
-        MockitoAnnotations.initMocks(this);
         controller = new RecipeController(recipeService);
         mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
     }
@@ -87,7 +87,7 @@ public class RecipeControllerTest {
 
         when(recipeService.findCommandById(anyLong())).thenReturn(command);
 
-        mockMvc.perform(get("/recipe/2/edit"))
+        mockMvc.perform(get("/recipe/1/edit"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("recipe/recipeForm"))
                 .andExpect(model().attributeExists("recipe"));

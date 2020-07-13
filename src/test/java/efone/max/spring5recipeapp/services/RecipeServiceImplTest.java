@@ -4,7 +4,7 @@ import efone.max.spring5recipeapp.converters.RecipeCommandToRecipe;
 import efone.max.spring5recipeapp.converters.RecipeToRecipeCommand;
 import efone.max.spring5recipeapp.domain.Recipe;
 import efone.max.spring5recipeapp.repositories.RecipeRepository;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -34,7 +34,7 @@ public class RecipeServiceImplTest {
     @Mock
     RecipeCommandToRecipe recipeCommandToRecipe;
 
-    @BeforeAll
+    @BeforeEach
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
 

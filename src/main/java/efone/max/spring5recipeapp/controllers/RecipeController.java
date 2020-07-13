@@ -35,7 +35,7 @@ public class RecipeController {
 
     @GetMapping("/{id}/edit")
     public String editRecipe(@PathVariable String id, Model model) {
-        model.addAttribute("recipe", recipeService.findById(Long.valueOf(id)));
+        model.addAttribute("recipe", recipeService.findCommandById(Long.valueOf(id)));
 
         return "recipe/recipeForm";
     }

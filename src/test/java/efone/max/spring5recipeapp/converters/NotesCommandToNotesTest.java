@@ -2,7 +2,7 @@ package efone.max.spring5recipeapp.converters;
 
 import efone.max.spring5recipeapp.commands.NotesCommand;
 import efone.max.spring5recipeapp.domain.Notes;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -15,7 +15,7 @@ public class NotesCommandToNotesTest {
     public static final String RECIPE_NOTES = "Notes";
     NotesCommandToNotes converter;
 
-    @BeforeAll
+    @BeforeEach
     public void setUp() throws Exception {
         converter = new NotesCommandToNotes();
 

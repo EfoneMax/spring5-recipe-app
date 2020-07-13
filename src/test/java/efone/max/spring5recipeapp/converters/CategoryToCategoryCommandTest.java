@@ -2,7 +2,7 @@ package efone.max.spring5recipeapp.converters;
 
 import efone.max.spring5recipeapp.commands.CategoryCommand;
 import efone.max.spring5recipeapp.domain.Category;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -18,7 +18,7 @@ public class CategoryToCategoryCommandTest {
     public static final String DESCRIPTION = "descript";
     CategoryToCategoryCommand convter;
 
-    @BeforeAll
+    @BeforeEach
     public void setUp() throws Exception {
         convter = new CategoryToCategoryCommand();
     }

@@ -1,22 +1,19 @@
 package efone.max.spring5recipeapp.services;
 
 import efone.max.spring5recipeapp.commands.IngredientCommand;
+import efone.max.spring5recipeapp.converters.IngredientCommandToIngredient;
 import efone.max.spring5recipeapp.converters.IngredientToIngredientCommand;
+import efone.max.spring5recipeapp.converters.UnitOfMeasureCommandToUnitOfMeasure;
 import efone.max.spring5recipeapp.converters.UnitOfMeasureToUnitOfMeasureCommand;
 import efone.max.spring5recipeapp.domain.Ingredient;
 import efone.max.spring5recipeapp.domain.Recipe;
 import efone.max.spring5recipeapp.repositories.RecipeRepository;
-import org.junit.jupiter.api.BeforeAll;
+import efone.max.spring5recipeapp.repositories.UnitOfMeasureRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-import org.mockito.junit.MockitoJUnitRunner;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.Optional;
 
@@ -28,21 +25,30 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class IngredientServiceImplTest {
-    IngredientToIngredientCommand ingredientToIngredientCommand;
+
+    private final IngredientToIngredientCommand ingredientToIngredientCommand;
+    private final IngredientCommandToIngredient ingredientCommandToIngredient;
 
     @Mock
     RecipeRepository recipeRepository;
+
+    @Mock
+    UnitOfMeasureRepository unitOfMeasureRepository;
 
     IngredientService ingredientService;
 
     //init converters
     public IngredientServiceImplTest() {
         this.ingredientToIngredientCommand = new IngredientToIngredientCommand(new UnitOfMeasureToUnitOfMeasureCommand());
+        this.ingredientCommandToIngredient = new IngredientCommandToIngredient(new UnitOfMeasureCommandToUnitOfMeasure());
     }
 
     @BeforeEach
     public void setUp() throws Exception {
-        ingredientService = new IngredientServiceImpl(ingredientToIngredientCommand, recipeRepository);
+        ingredientService = new IngredientServiceImpl(ingredientToIngredientCommand,
+                recipeRepository,
+                ingredientCommandToIngredient,
+                unitOfMeasureRepository);
     }
 
     @Test

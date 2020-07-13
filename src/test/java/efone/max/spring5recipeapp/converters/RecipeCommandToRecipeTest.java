@@ -6,9 +6,8 @@ import efone.max.spring5recipeapp.commands.NotesCommand;
 import efone.max.spring5recipeapp.commands.RecipeCommand;
 import efone.max.spring5recipeapp.domain.Difficulty;
 import efone.max.spring5recipeapp.domain.Recipe;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -33,7 +32,7 @@ public class RecipeCommandToRecipeTest {
     RecipeCommandToRecipe converter;
 
 
-    @BeforeAll
+    @BeforeEach
     public void setUp() throws Exception {
         converter = new RecipeCommandToRecipe(new CategoryCommandToCategory(),
                 new IngredientCommandToIngredient(new UnitOfMeasureCommandToUnitOfMeasure()),
