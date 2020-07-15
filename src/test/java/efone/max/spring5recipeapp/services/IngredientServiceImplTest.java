@@ -7,6 +7,7 @@ import efone.max.spring5recipeapp.converters.UnitOfMeasureCommandToUnitOfMeasure
 import efone.max.spring5recipeapp.converters.UnitOfMeasureToUnitOfMeasureCommand;
 import efone.max.spring5recipeapp.domain.Ingredient;
 import efone.max.spring5recipeapp.domain.Recipe;
+import efone.max.spring5recipeapp.repositories.IngredientRepository;
 import efone.max.spring5recipeapp.repositories.RecipeRepository;
 import efone.max.spring5recipeapp.repositories.UnitOfMeasureRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,6 +15,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -34,6 +36,9 @@ public class IngredientServiceImplTest {
     RecipeRepository recipeRepository;
 
     @Mock
+    IngredientRepository ingredientRepository;
+
+    @Mock
     UnitOfMeasureRepository unitOfMeasureRepository;
 
     IngredientService ingredientService;
@@ -49,7 +54,8 @@ public class IngredientServiceImplTest {
         ingredientService = new IngredientServiceImpl(ingredientToIngredientCommand,
                 recipeRepository,
                 ingredientCommandToIngredient,
-                unitOfMeasureRepository);
+                unitOfMeasureRepository,
+                ingredientRepository);
     }
 
     @Test
@@ -111,5 +117,14 @@ public class IngredientServiceImplTest {
         verify(recipeRepository, times(1)).findById(anyLong());
         verify(recipeRepository, times(1)).save(any(Recipe.class));
 
+    }
+
+    @Test
+    @Transactional
+    public void testDeleteById() throws Exception {
+        ingredientService.delete(1L, 3L);
+
+        verify(ingredientRepository, times(1))
+                .deleteIngredientByRecipeIdAndId(anyLong(), anyLong());
     }
 }
