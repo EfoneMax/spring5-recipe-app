@@ -15,7 +15,11 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
 import java.math.BigDecimal;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -37,11 +41,15 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
     @Override
     @Transactional
     public void onApplicationEvent(ContextRefreshedEvent event) {
-        recipeRepository.saveAll(getRecipes());
+        try {
+            recipeRepository.saveAll(getRecipes());
+        } catch (IOException e) {
+            log.error("bootstrap failed\n" + e);
+        }
         log.debug("loading bootstrap data");
     }
 
-    private List<Recipe> getRecipes() {
+    private List<Recipe> getRecipes() throws IOException {
 
         List<Recipe> recipes = new ArrayList<>(2);
 
@@ -135,6 +143,18 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
                 "Read more: http://www.simplyrecipes.com/recipes/perfect_guacamole/#ixzz4jvoun5ws");
 
         guacRecipe.setNotes(guacNotes);
+        Path fileLocation = Paths.get("C:\\Project\\spring5-recipe-app\\src\\main\\resources\\static\\images\\guacamole400x400.jpg");
+        byte[] file = Files.readAllBytes(fileLocation);
+
+        Byte[] byteObjects = new Byte[file.length];
+
+        int i = 0;
+
+        for (byte b : file){
+            byteObjects[i++] = b;
+        }
+
+        guacRecipe.setImage(byteObjects);
 
         guacRecipe.addIngredient(new Ingredient("ripe avocados", new BigDecimal(2), eachUom));
         guacRecipe.addIngredient(new Ingredient("Kosher salt", new BigDecimal(".5"), teapoonUom));
